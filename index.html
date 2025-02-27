@@ -37,11 +37,17 @@
             position: fixed;
             bottom: 10px;
             right: 10px;
-            width: 100px;
+            width: 150px;
+        }
+        .header-logo {
+            width: 200px;
+            margin: 10px auto;
+            display: block;
         }
     </style>
 </head>
 <body>
+    <img src="logo_nhdro1.jpg" class="header-logo" alt="NHDRO Logo">
     <div class="container">
         <h1>NHDRO ET Predictor</h1>
         <p>Enter your 60 ft time to estimate your 1/8 and 1/4 mile ET.</p>
@@ -51,7 +57,7 @@
         <p>1/8 Mile ET: <span id="eighthET">-</span></p>
         <p>1/4 Mile ET: <span id="quarterET">-</span></p>
     </div>
-    <img src="nhdro_logo.png" class="logo" alt="NHDRO Logo">
+    <img src="logo_nhdro1.jpg" class="logo" alt="NHDRO Logo">
     <script>
         function calculateET() {
             let sixtyFt = parseFloat(document.getElementById("sixtyFt").value);
