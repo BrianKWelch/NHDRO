@@ -3,81 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Web App</title>
+    <title>NHDRO ET Predictor</title>
     <style>
         body {
+            background-color: #111;
+            color: #fff;
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             text-align: center;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #333;
-            color: white;
-            padding: 15px 0;
-        }
-        nav {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 10px;
         }
         .container {
-            padding: 50px 20px;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
         }
-        button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 20px;
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
             border: none;
-            cursor: pointer;
-            font-size: 16px;
             border-radius: 5px;
         }
-        button:hover {
-            background-color: #0056b3;
+        input {
+            background-color: #222;
+            color: #fff;
         }
-        footer {
-            background-color: #333;
+        button {
+            background-color: red;
             color: white;
-            padding: 10px 0;
-            margin-top: 20px;
+            cursor: pointer;
+        }
+        .logo {
+            opacity: 0.2;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 100px;
         }
     </style>
 </head>
 <body>
-
-    <header>
-        <h1>Welcome to My Web App</h1>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-        </nav>
-    </header>
-
     <div class="container">
-        <h2>Hello, World!</h2>
-        <p>This is a simple web page to get you started.</p>
-        <button onclick="showMessage()">Click Me</button>
-        <p id="message"></p>
+        <h1>NHDRO ET Predictor</h1>
+        <p>Enter your 60 ft time to estimate your 1/8 and 1/4 mile ET.</p>
+        <input type="number" id="sixtyFt" placeholder="Enter 60 ft time">
+        <button onclick="calculateET()">Predict ET</button>
+        <h2>Results</h2>
+        <p>1/8 Mile ET: <span id="eighthET">-</span></p>
+        <p>1/4 Mile ET: <span id="quarterET">-</span></p>
     </div>
-
-    <footer>
-        <p>&copy; 2025 My Web App. All rights reserved.</p>
-    </footer>
-
+    <img src="nhdro_logo.png" class="logo" alt="NHDRO Logo">
     <script>
-        function showMessage() {
-            document.getElementById("message").innerText = "You clicked the button!";
+        function calculateET() {
+            let sixtyFt = parseFloat(document.getElementById("sixtyFt").value);
+            if (isNaN(sixtyFt) || sixtyFt <= 0) {
+                alert("Please enter a valid 60 ft time");
+                return;
+            }
+            let eighthET = (sixtyFt * 1.7).toFixed(2);
+            let quarterET = (sixtyFt * 4.3).toFixed(2);
+            document.getElementById("eighthET").innerText = eighthET;
+            document.getElementById("quarterET").innerText = quarterET;
         }
     </script>
-
 </body>
 </html>
