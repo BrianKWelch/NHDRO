@@ -51,9 +51,10 @@
     <div class="container">
         <h1>NHDRO ET Predictor</h1>
         <p>Enter your details to estimate your 1/8 and 1/4 mile ET.</p>
-        <input type="number" id="sixtyFt" placeholder="Enter 60 ft time" oninput="calculateET()">
-        <input type="number" id="bikeWeight" placeholder="Enter bike + rider weight (lbs)" oninput="calculateET()">
-        <input type="number" id="horsepower" placeholder="Enter horsepower" oninput="calculateET()">
+        <input type="number" id="sixtyFt" placeholder="Enter 60 ft time">
+        <input type="number" id="bikeWeight" placeholder="Enter bike + rider weight (lbs)">
+        <input type="number" id="horsepower" placeholder="Enter horsepower">
+        <button onclick="calculateET()">Predict ET</button>
         <h2>Results</h2>
         <p>330 Foot ET: <span id="threeThirtyET">-</span></p>
         <p>1/8 Mile ET: <span id="eighthET">-</span></p>
@@ -70,18 +71,13 @@
             let hp = parseFloat(document.getElementById("horsepower").value);
             
             if (isNaN(sixtyFt) || sixtyFt <= 0 || isNaN(weight) || weight <= 0 || isNaN(hp) || hp <= 0) {
-                document.getElementById("threeThirtyET").innerText = "-";
-                document.getElementById("eighthET").innerText = "-";
-                document.getElementById("eighthMPH").innerText = "-";
-                document.getElementById("thousandET").innerText = "-";
-                document.getElementById("quarterET").innerText = "-";
-                document.getElementById("quarterMPH").innerText = "-";
+                alert("Please enter valid values for all fields.");
                 return;
             }
             
             let quarterET = (6.290 * Math.pow(weight / hp, 1/3)).toFixed(2);
             let quarterMPH = (224 * Math.pow(hp / weight, 1/3)).toFixed(2);
-            let eighthET = (quarterET * 0.63).toFixed(2);
+            let eighthET = (sixtyFt * 4.54).toFixed(2);
             let eighthMPH = (quarterMPH * 0.81).toFixed(2);
             let threeThirtyET = (sixtyFt * 2.83).toFixed(2);
             let thousandET = (sixtyFt * 5.97).toFixed(2);
