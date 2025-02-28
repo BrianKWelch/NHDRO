@@ -81,8 +81,10 @@
             let eighthET = (sixtyFt * 3.95 * powerFactor).toFixed(2);
             let thousandET = (eighthET * 1.205).toFixed(2);
             let quarterET = (sixtyFt * 5.75 * powerFactor).toFixed(2);
-            let quarterMPH = (234 * Math.pow(hp / weight, 1/3) * (1.0 / (powerFactor * sixtyFt * 0.1))).toFixed(2); // Now includes 60ft
-            let eighthMPH = (quarterMPH * 0.808).toFixed(2);
+            
+            // Corrected MPH Calculations
+            let quarterMPH = (170 * Math.pow(hp / weight, 0.5)).toFixed(2); // Realistic formula
+            let eighthMPH = (quarterMPH * 0.805).toFixed(2);
             
             document.getElementById("threeThirtyET").innerText = threeThirtyET;
             document.getElementById("eighthET").innerText = eighthET;
