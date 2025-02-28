@@ -54,8 +54,12 @@
         <input type="number" id="sixtyFt" placeholder="Enter 60 ft time">
         <button onclick="calculateET()">Predict ET</button>
         <h2>Results</h2>
+        <p>330 Foot ET: <span id="threeThirtyET">-</span></p>
         <p>1/8 Mile ET: <span id="eighthET">-</span></p>
+        <p>1/8 Mile MPH: <span id="eighthMPH">-</span></p>
+        <p>1000 Foot ET: <span id="thousandET">-</span></p>
         <p>1/4 Mile ET: <span id="quarterET">-</span></p>
+        <p>1/4 Mile MPH: <span id="quarterMPH">-</span></p>
     </div>
     <img src="logo_nhdro1.jpg" class="logo" alt="NHDRO Logo">
     <script>
@@ -65,10 +69,19 @@
                 alert("Please enter a valid 60 ft time");
                 return;
             }
-            let eighthET = (sixtyFt * 1.7).toFixed(2);
-            let quarterET = (eighthET * 1.57).toFixed(2);
+            let threeThirtyET = (sixtyFt * 2.83).toFixed(2);
+            let eighthET = (sixtyFt * 4.54).toFixed(2);
+            let eighthMPH = (eighthET * 18.5).toFixed(2);
+            let thousandET = (sixtyFt * 5.97).toFixed(2);
+            let quarterET = (eighthET * 1.58).toFixed(2);
+            let quarterMPH = (quarterET * 13.8).toFixed(2);
+            
+            document.getElementById("threeThirtyET").innerText = threeThirtyET;
             document.getElementById("eighthET").innerText = eighthET;
+            document.getElementById("eighthMPH").innerText = eighthMPH;
+            document.getElementById("thousandET").innerText = thousandET;
             document.getElementById("quarterET").innerText = quarterET;
+            document.getElementById("quarterMPH").innerText = quarterMPH;
         }
     </script>
 </body>
