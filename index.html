@@ -50,48 +50,70 @@
     <img src="logo_nhdro1.jpg" class="header-logo" alt="NHDRO Logo">
     <div class="container">
         <h1>NHDRO ET Predictor</h1>
-        <p>Enter your details to estimate your 1/8 and 1/4 mile ET.</p>
-        <input type="number" id="sixtyFt" placeholder="Enter 60 ft time">
+        <p>Enter weight and horsepower to calculate baseline ETs. Adjust 60 ft to see impact.</p>
         <input type="number" id="bikeWeight" placeholder="Enter bike + rider weight (lbs)">
         <input type="number" id="horsepower" placeholder="Enter horsepower">
-        <button onclick="calculateET()">Predict ET</button>
+        <button onclick="calculateBaseline()">Generate Baseline Ticket</button>
+        
         <h2>Results</h2>
+        <p>60 Foot ET: <span id="sixtyFt">1.20</span></p>
         <p>330 Foot ET: <span id="threeThirtyET">-</span></p>
         <p>1/8 Mile ET: <span id="eighthET">-</span></p>
         <p>1/8 Mile MPH: <span id="eighthMPH">-</span></p>
         <p>1000 Foot ET: <span id="thousandET">-</span></p>
         <p>1/4 Mile ET: <span id="quarterET">-</span></p>
         <p>1/4 Mile MPH: <span id="quarterMPH">-</span></p>
+        
+        <h3>Adjust 60 ft Time</h3>
+        <input type="number" id="adjustedSixtyFt" placeholder="Enter new 60 ft time" value="1.20">
+        <button onclick="adjustSixtyFt()">Apply 60 ft Adjustment</button>
     </div>
     <img src="logo_nhdro1.jpg" class="logo" alt="NHDRO Logo">
     <script>
-        function calculateET() {
-            let sixtyFt = parseFloat(document.getElementById("sixtyFt").value);
+        let baselineETs = {};
+        
+        function calculateBaseline() {
             let weight = parseFloat(document.getElementById("bikeWeight").value);
             let hp = parseFloat(document.getElementById("horsepower").value);
             
-            if (isNaN(sixtyFt) || sixtyFt <= 0 || isNaN(weight) || weight <= 0 || isNaN(hp) || hp <= 0) {
-                alert("Please enter valid values for all fields.");
+            if (isNaN(weight) || weight <= 0 || isNaN(hp) || hp <= 0) {
+                alert("Please enter valid values for weight and horsepower.");
                 return;
             }
             
-            let powerFactor = Math.pow(weight / hp, 1/3);
+            let baseSixtyFt = 1.20; // Default starting point
+            let etFactor = Math.pow(weight / hp, 1/3);
             
-            let threeThirtyET = (sixtyFt * 2.83 * powerFactor).toFixed(2);
-            let eighthET = (sixtyFt * 3.95 * powerFactor).toFixed(2);
-            let thousandET = (eighthET * 1.205).toFixed(2);
-            let quarterET = (sixtyFt * 5.75 * powerFactor).toFixed(2);
-            
-            // Corrected MPH Calculations
-            let quarterMPH = (170 * Math.pow(hp / weight, 0.5)).toFixed(2); // Realistic formula
+            let quarterET = (6.269 * etFactor).toFixed(2);
+            let quarterMPH = (230 * Math.pow(hp / weight, 1/3)).toFixed(2);
+            let eighthET = (quarterET * 0.655).toFixed(2);
             let eighthMPH = (quarterMPH * 0.805).toFixed(2);
+            let threeThirtyET = (eighthET * 0.58).toFixed(2);
+            let thousandET = (eighthET * 1.205).toFixed(2);
             
-            document.getElementById("threeThirtyET").innerText = threeThirtyET;
-            document.getElementById("eighthET").innerText = eighthET;
-            document.getElementById("eighthMPH").innerText = eighthMPH;
-            document.getElementById("thousandET").innerText = thousandET;
-            document.getElementById("quarterET").innerText = quarterET;
-            document.getElementById("quarterMPH").innerText = quarterMPH;
+            baselineETs = { threeThirtyET, eighthET, thousandET, quarterET, quarterMPH, eighthMPH, baseSixtyFt };
+            updateResults(baseSixtyFt);
+        }
+        
+        function adjustSixtyFt() {
+            let newSixtyFt = parseFloat(document.getElementById("adjustedSixtyFt").value);
+            if (isNaN(newSixtyFt) || newSixtyFt <= 0) {
+                alert("Enter a valid 60 ft time.");
+                return;
+            }
+            
+            let ratio = newSixtyFt / baselineETs.baseSixtyFt;
+            document.getElementById("sixtyFt").innerText = newSixtyFt.toFixed(2);
+            updateResults(newSixtyFt, ratio);
+        }
+        
+        function updateResults(sixtyFt, ratio = 1) {
+            document.getElementById("threeThirtyET").innerText = (baselineETs.threeThirtyET * ratio).toFixed(2);
+            document.getElementById("eighthET").innerText = (baselineETs.eighthET * ratio).toFixed(2);
+            document.getElementById("eighthMPH").innerText = (baselineETs.eighthMPH / ratio).toFixed(2);
+            document.getElementById("thousandET").innerText = (baselineETs.thousandET * ratio).toFixed(2);
+            document.getElementById("quarterET").innerText = (baselineETs.quarterET * ratio).toFixed(2);
+            document.getElementById("quarterMPH").innerText = (baselineETs.quarterMPH / ratio).toFixed(2);
         }
     </script>
 </body>
