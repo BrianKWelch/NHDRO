@@ -50,8 +50,10 @@
     <img src="logo_nhdro1.jpg" class="header-logo" alt="NHDRO Logo">
     <div class="container">
         <h1>NHDRO ET Predictor</h1>
-        <p>Enter your 60 ft time to estimate your 1/8 and 1/4 mile ET.</p>
+        <p>Enter your details to estimate your 1/8 and 1/4 mile ET.</p>
         <input type="number" id="sixtyFt" placeholder="Enter 60 ft time">
+        <input type="number" id="bikeWeight" placeholder="Enter bike + rider weight (lbs)">
+        <input type="number" id="horsepower" placeholder="Enter horsepower">
         <button onclick="calculateET()">Predict ET</button>
         <h2>Results</h2>
         <p>330 Foot ET: <span id="threeThirtyET">-</span></p>
@@ -65,16 +67,20 @@
     <script>
         function calculateET() {
             let sixtyFt = parseFloat(document.getElementById("sixtyFt").value);
-            if (isNaN(sixtyFt) || sixtyFt <= 0) {
-                alert("Please enter a valid 60 ft time");
+            let weight = parseFloat(document.getElementById("bikeWeight").value);
+            let hp = parseFloat(document.getElementById("horsepower").value);
+            
+            if (isNaN(sixtyFt) || sixtyFt <= 0 || isNaN(weight) || weight <= 0 || isNaN(hp) || hp <= 0) {
+                alert("Please enter valid values for all fields.");
                 return;
             }
+            
+            let quarterET = (6.290 * Math.pow(weight / hp, 1/3)).toFixed(2);
+            let quarterMPH = (224 * Math.pow(hp / weight, 1/3)).toFixed(2);
+            let eighthET = (quarterET * 0.63).toFixed(2);
+            let eighthMPH = (quarterMPH * 0.81).toFixed(2);
             let threeThirtyET = (sixtyFt * 2.83).toFixed(2);
-            let eighthET = (sixtyFt * 4.54).toFixed(2);
-            let eighthMPH = (eighthET * 18.5).toFixed(2);
             let thousandET = (sixtyFt * 5.97).toFixed(2);
-            let quarterET = (eighthET * 1.58).toFixed(2);
-            let quarterMPH = (quarterET * 13.8).toFixed(2);
             
             document.getElementById("threeThirtyET").innerText = threeThirtyET;
             document.getElementById("eighthET").innerText = eighthET;
