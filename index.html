@@ -3,118 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NHDRO ET Predictor</title>
-    <style>
-        body {
-            background-color: #111;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-        }
-        input {
-            background-color: #222;
-            color: #fff;
-        }
-        button {
-            background-color: red;
-            color: white;
-            cursor: pointer;
-        }
-        .logo {
-            opacity: 0.2;
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            width: 150px;
-        }
-        .header-logo {
-            width: 200px;
-            margin: 10px auto;
-            display: block;
-        }
-    </style>
+    <title>AI Weight Loss Buddy - Virtual Coach</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
-<body>
-    <img src="logo_nhdro1.jpg" class="header-logo" alt="NHDRO Logo">
-    <div class="container">
-        <h1>NHDRO ET Predictor</h1>
-        <p>Enter weight and horsepower to calculate baseline ETs. Adjust 60 ft to see impact.</p>
-        <input type="number" id="bikeWeight" placeholder="Enter bike + rider weight (lbs)">
-        <input type="number" id="horsepower" placeholder="Enter horsepower">
-        <button onclick="calculateBaseline()">Generate Baseline Ticket</button>
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState } = React;
         
-        <h2>Results</h2>
-        <p>60 Foot ET: <span id="sixtyFt">1.20</span></p>
-        <p>330 Foot ET: <span id="threeThirtyET">-</span></p>
-        <p>1/8 Mile ET: <span id="eighthET">-</span></p>
-        <p>1/8 Mile MPH: <span id="eighthMPH">-</span></p>
-        <p>1000 Foot ET: <span id="thousandET">-</span></p>
-        <p>1/4 Mile ET: <span id="quarterET">-</span></p>
-        <p>1/4 Mile MPH: <span id="quarterMPH">-</span></p>
-        
-        <h3>Adjust 60 ft Time</h3>
-        <input type="number" id="adjustedSixtyFt" placeholder="Enter new 60 ft time" value="1.20">
-        <button onclick="adjustSixtyFt()">Apply 60 ft Adjustment</button>
-    </div>
-    <img src="logo_nhdro1.jpg" class="logo" alt="NHDRO Logo">
-    <script>
-        let baselineETs = {};
-        
-        function calculateBaseline() {
-            let weight = parseFloat(document.getElementById("bikeWeight").value);
-            let hp = parseFloat(document.getElementById("horsepower").value);
-            
-            if (isNaN(weight) || weight <= 0 || isNaN(hp) || hp <= 0) {
-                alert("Please enter valid values for weight and horsepower.");
-                return;
-            }
-            
-            let baseSixtyFt = 1.20; // Default starting point
-            let etFactor = Math.pow(weight / hp, 1/3);
-            
-            let quarterET = (6.269 * etFactor).toFixed(2);
-            let quarterMPH = (230 * Math.pow(hp / weight, 1/3)).toFixed(2);
-            let eighthET = (quarterET * 0.655).toFixed(2);
-            let eighthMPH = (quarterMPH * 0.805).toFixed(2);
-            let threeThirtyET = (eighthET * 0.58).toFixed(2);
-            let thousandET = (eighthET * 1.205).toFixed(2);
-            
-            baselineETs = { threeThirtyET, eighthET, thousandET, quarterET, quarterMPH, eighthMPH, baseSixtyFt };
-            updateResults(baseSixtyFt);
+        function VirtualCoachSelection() {
+            const [gender, setGender] = useState("male");
+            const [skinTone, setSkinTone] = useState("light");
+
+            const coaches = {
+                male: {
+                    light: "male_light.png",
+                    medium: "male_medium.png",
+                    dark: "male_dark.png",
+                },
+                female: {
+                    light: "female_light.png",
+                    medium: "female_medium.png",
+                    dark: "female_dark.png",
+                },
+            };
+
+            return (
+                <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
+                    <h2 className="text-xl font-bold mb-4">Select Your Virtual Coach</h2>
+                    
+                    <div className="flex gap-4 mb-4">
+                        <button onClick={() => setGender("male")} className={`px-4 py-2 rounded ${gender === "male" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Male</button>
+                        <button onClick={() => setGender("female")} className={`px-4 py-2 rounded ${gender === "female" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Female</button>
+                    </div>
+                    
+                    <div className="flex gap-4 mb-4">
+                        <button onClick={() => setSkinTone("light")} className={`px-4 py-2 rounded ${skinTone === "light" ? "bg-gray-300" : "bg-gray-200"}`}>Light</button>
+                        <button onClick={() => setSkinTone("medium")} className={`px-4 py-2 rounded ${skinTone === "medium" ? "bg-gray-500 text-white" : "bg-gray-200"}`}>Medium</button>
+                        <button onClick={() => setSkinTone("dark")} className={`px-4 py-2 rounded ${skinTone === "dark" ? "bg-gray-700 text-white" : "bg-gray-200"}`}>Dark</button>
+                    </div>
+                    
+                    <div className="w-64 h-64 flex justify-center items-center border p-4 rounded-lg shadow">
+                        <img src={coaches[gender][skinTone]} alt="Virtual Coach" className="w-full h-full object-cover rounded-lg" />
+                    </div>
+                </div>
+            );
         }
         
-        function adjustSixtyFt() {
-            let newSixtyFt = parseFloat(document.getElementById("adjustedSixtyFt").value);
-            if (isNaN(newSixtyFt) || newSixtyFt <= 0) {
-                alert("Enter a valid 60 ft time.");
-                return;
-            }
-            
-            let ratio = newSixtyFt / baselineETs.baseSixtyFt;
-            document.getElementById("sixtyFt").innerText = newSixtyFt.toFixed(2);
-            updateResults(newSixtyFt, ratio);
-        }
-        
-        function updateResults(sixtyFt, ratio = 1) {
-            document.getElementById("threeThirtyET").innerText = (baselineETs.threeThirtyET * ratio).toFixed(2);
-            document.getElementById("eighthET").innerText = (baselineETs.eighthET * ratio).toFixed(2);
-            document.getElementById("eighthMPH").innerText = (baselineETs.eighthMPH / ratio).toFixed(2);
-            document.getElementById("thousandET").innerText = (baselineETs.thousandET * ratio).toFixed(2);
-            document.getElementById("quarterET").innerText = (baselineETs.quarterET * ratio).toFixed(2);
-            document.getElementById("quarterMPH").innerText = (baselineETs.quarterMPH / ratio).toFixed(2);
-        }
+        ReactDOM.render(<VirtualCoachSelection />, document.getElementById("root"));
     </script>
 </body>
 </html>
