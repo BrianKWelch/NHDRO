@@ -9,9 +9,11 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-    <h1 class="text-3xl font-bold text-center mb-6 w-full">Choose Your AI Fitness Coach</h1>
-    <div id="root"></div>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div class="max-w-md w-full">
+        <h1 class="text-2xl font-bold text-center mb-4">Choose Your AI Fitness Coach</h1>
+        <div id="root"></div>
+    </div>
     <script type="text/babel">
         const { useState } = React;
         
@@ -37,27 +39,27 @@
             };
 
             return (
-                <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
-                    <h2 className="text-xl font-bold mb-4">Select Your Virtual Coach</h2>
+                <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg w-full max-w-md">
+                    <h2 className="text-lg font-bold mb-3 text-center">Select Your Virtual Coach</h2>
                     
-                    <div className="flex gap-4 mb-4">
-                        <button onClick={() => setSelectedCoach("Brian")} className={`px-4 py-2 rounded ${selectedCoach === "Brian" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Brian</button>
-                        <button onClick={() => setSelectedCoach("Juan")} className={`px-4 py-2 rounded ${selectedCoach === "Juan" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Juan</button>
-                        <button onClick={() => setSelectedCoach("Abdul")} className={`px-4 py-2 rounded ${selectedCoach === "Abdul" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Abdul</button>
-                        <button onClick={() => setSelectedCoach("Brendan")} className={`px-4 py-2 rounded ${selectedCoach === "Brendan" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Brendan</button>
-                        <button onClick={() => setSelectedCoach("Jerry")} className={`px-4 py-2 rounded ${selectedCoach === "Jerry" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Jerry</button>
-                        <button onClick={() => setSelectedCoach("Nick")} className={`px-4 py-2 rounded ${selectedCoach === "Nick" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Nick</button>
+                    <div className="grid grid-cols-3 gap-2 mb-3 w-full">
+                        <button onClick={() => setSelectedCoach("Brian")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Brian" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Brian</button>
+                        <button onClick={() => setSelectedCoach("Juan")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Juan" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Juan</button>
+                        <button onClick={() => setSelectedCoach("Abdul")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Abdul" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Abdul</button>
+                        <button onClick={() => setSelectedCoach("Brendan")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Brendan" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Brendan</button>
+                        <button onClick={() => setSelectedCoach("Jerry")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Jerry" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Jerry</button>
+                        <button onClick={() => setSelectedCoach("Nick")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Nick" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Nick</button>
                     </div>
 
-                    <div className="flex gap-4 mb-4">
-                        <button onClick={() => setSelectedCoach("Chantay")} className={`px-4 py-2 rounded ${selectedCoach === "Chantay" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Chantay</button>
-                        <button onClick={() => setSelectedCoach("Sidney")} className={`px-4 py-2 rounded ${selectedCoach === "Sidney" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Sidney</button>
-                        <button onClick={() => setSelectedCoach("Mady")} className={`px-4 py-2 rounded ${selectedCoach === "Mady" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Mady</button>
-                        <button onClick={() => setSelectedCoach("Niki")} className={`px-4 py-2 rounded ${selectedCoach === "Niki" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Niki</button>
-                        <button onClick={() => setSelectedCoach("Becky")} className={`px-4 py-2 rounded ${selectedCoach === "Becky" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Becky</button>
+                    <div className="grid grid-cols-3 gap-2 mb-3 w-full">
+                        <button onClick={() => setSelectedCoach("Chantay")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Chantay" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Chantay</button>
+                        <button onClick={() => setSelectedCoach("Sidney")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Sidney" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Sidney</button>
+                        <button onClick={() => setSelectedCoach("Mady")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Mady" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Mady</button>
+                        <button onClick={() => setSelectedCoach("Niki")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Niki" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Niki</button>
+                        <button onClick={() => setSelectedCoach("Becky")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Becky" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Becky</button>
                     </div>
                     
-                    <div className="w-64 h-64 flex justify-center items-center border p-4 rounded-lg shadow">
+                    <div className="w-48 h-48 flex justify-center items-center border p-2 rounded-lg shadow">
                         <img src={coaches.male[selectedCoach] || coaches.female[selectedCoach]} alt="Virtual Coach" className="w-full h-full object-cover rounded-lg" />
                     </div>
                 </div>
