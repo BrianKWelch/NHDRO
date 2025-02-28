@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Weight Loss Buddy  - Virtual Coach</title>
+    <title>AI Weight Loss Buddy - Virtual Coach</title>
     <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
 </head>
-<body class="flex items-center justify-center min-h-screen bg-gray-100">
-    <h1 class="text-2xl font-bold text-center mb-6">Choose Your AI Fitness Coach</h1>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <h1 class="text-3xl font-bold text-center mb-6 w-full">Choose Your AI Fitness Coach</h1>
     <div id="root"></div>
     <script type="text/babel">
         const { useState } = React;
@@ -28,10 +28,10 @@
                     Nick: "nick.png",
                 },
                 female: {
-                    Niki: "niki.png",
                     Chantay: "chantay.png",
                     Sidney: "sidney.png",
-                    Mady: "mady.png",                    
+                    Mady: "mady.png",
+                    Niki: "niki.png",
                     Becky: "becky.png",
                 },
             };
@@ -50,10 +50,10 @@
                     </div>
 
                     <div className="flex gap-4 mb-4">
-                        <button onClick={() => setSelectedCoach("Niki")} className={`px-4 py-2 rounded ${selectedCoach === "Niki" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Niki</button>                        
+                        <button onClick={() => setSelectedCoach("Chantay")} className={`px-4 py-2 rounded ${selectedCoach === "Chantay" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Chantay</button>
                         <button onClick={() => setSelectedCoach("Sidney")} className={`px-4 py-2 rounded ${selectedCoach === "Sidney" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Sidney</button>
                         <button onClick={() => setSelectedCoach("Mady")} className={`px-4 py-2 rounded ${selectedCoach === "Mady" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Mady</button>
-                        <button onClick={() => setSelectedCoach("Chantay")} className={`px-4 py-2 rounded ${selectedCoach === "Chantay" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Chantay</button>
+                        <button onClick={() => setSelectedCoach("Niki")} className={`px-4 py-2 rounded ${selectedCoach === "Niki" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Niki</button>
                         <button onClick={() => setSelectedCoach("Becky")} className={`px-4 py-2 rounded ${selectedCoach === "Becky" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Becky</button>
                     </div>
                     
