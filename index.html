@@ -40,7 +40,7 @@
 
             return (
                 <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg w-full max-w-md">
-                    <h2 className="text-lg font-bold mb-3 text-center">Select Your Virtual Coach</h2>
+                    <h2 className="text-lg font-bold mb-3 text-center">Male Coaches</h2>
                     
                     <div className="grid grid-cols-3 gap-2 mb-3 w-full">
                         <button onClick={() => setSelectedCoach("Brian")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Brian" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Brian</button>
@@ -50,7 +50,8 @@
                         <button onClick={() => setSelectedCoach("Jerry")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Jerry" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Jerry</button>
                         <button onClick={() => setSelectedCoach("Nick")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Nick" ? "bg-blue-500 text-white" : "bg-gray-200"}`}>Nick</button>
                     </div>
-
+                    
+                    <h2 className="text-lg font-bold mb-3 text-center">Female Coaches</h2>
                     <div className="grid grid-cols-3 gap-2 mb-3 w-full">
                         <button onClick={() => setSelectedCoach("Chantay")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Chantay" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Chantay</button>
                         <button onClick={() => setSelectedCoach("Sidney")} className={`px-3 py-2 rounded text-sm ${selectedCoach === "Sidney" ? "bg-pink-500 text-white" : "bg-gray-200"}`}>Sidney</button>
