@@ -75,12 +75,14 @@
                 return;
             }
             
-            let quarterET = (6.290 * Math.pow(weight / hp, 1/3)).toFixed(2);
-            let quarterMPH = (234 * Math.pow(hp / weight, 1/3)).toFixed(2); 
-            let eighthET = (sixtyFt * 3.95).toFixed(2);  // FIXED: Now scales with 60 ft
-            let eighthMPH = (quarterMPH * 0.808).toFixed(2);
-            let threeThirtyET = (sixtyFt * 2.83).toFixed(2);
+            let powerFactor = Math.pow(weight / hp, 1/3);
+            
+            let threeThirtyET = (sixtyFt * 2.83 * powerFactor).toFixed(2);
+            let eighthET = (sixtyFt * 3.95 * powerFactor).toFixed(2);
             let thousandET = (eighthET * 1.205).toFixed(2);
+            let quarterET = (sixtyFt * 5.75 * powerFactor).toFixed(2);
+            let quarterMPH = (234 * Math.pow(hp / weight, 1/3) * (1.0 / (powerFactor * sixtyFt * 0.1))).toFixed(2); // Now includes 60ft
+            let eighthMPH = (quarterMPH * 0.808).toFixed(2);
             
             document.getElementById("threeThirtyET").innerText = threeThirtyET;
             document.getElementById("eighthET").innerText = eighthET;
