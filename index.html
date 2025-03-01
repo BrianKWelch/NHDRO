@@ -120,10 +120,10 @@
             );
         }
 
-        function ChatPage({ coachName, username, coachImage }) {
-            const [messages, setMessages] = useState([]);
-            const [input, setInput] = useState("");
-            const API_KEY = localStorage.getItem("apiKey") || "";
+        function ChatPage({ coachName = "Coach", username = "User", coachImage = "default.png" }) {
+    const [messages, setMessages] = useState([]);
+    const [input, setInput] = useState("");
+    const apiKey = localStorage.getItem("apiKey") || "";
 
             const sendMessage = async () => {
                 if (!input.trim()) return;
