@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,10 +17,10 @@
         const { useState, useEffect } = React;
 
         function App() {
+            const [apiKey, setApiKey] = useState(localStorage.getItem("apiKey") || "");
             const [username, setUsername] = useState("");
             const [nameConfirmed, setNameConfirmed] = useState(false);
             const [selectedCoach, setSelectedCoach] = useState(null);
-            const [apiKey, setApiKey] = useState(localStorage.getItem("apiKey") || "");
 
             useEffect(() => {
                 const storedName = localStorage.getItem("username");
@@ -30,17 +30,10 @@
                 }
             }, []);
 
-            const handleNameSubmit = () => {
-                if (username.trim() !== "") {
-                    localStorage.setItem("username", username);
-                    setNameConfirmed(true);
-                }
-            };
-
             const handleApiKeySubmit = () => {
                 if (apiKey.trim() !== "") {
                     localStorage.setItem("apiKey", apiKey);
-                    window.location.reload();
+                    window.location.reload(); // Refresh to apply API key
                 }
             };
 
@@ -60,6 +53,13 @@
                 );
             }
 
+            const handleNameSubmit = () => {
+                if (username.trim() !== "") {
+                    localStorage.setItem("username", username);
+                    setNameConfirmed(true);
+                }
+            };
+
             if (!nameConfirmed) {
                 return (
                     <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg w-full max-w-md">
@@ -77,10 +77,94 @@
             }
 
             if (selectedCoach) {
-                return <ChatPage coachName={selectedCoach} username={username} coachImage={`${selectedCoach.toLowerCase()}.png`} />;
+                return <ChatPage 
+                    coachName={selectedCoach} 
+                    username={username} 
+                    coachImage={`${selectedCoach.toLowerCase()}.png`} 
+                />;
             }
 
             return <VirtualCoachSelection setSelectedCoach={setSelectedCoach} />;
+        }
+        
+        function VirtualCoachSelection({ setSelectedCoach }) {
+            const [selected, setSelected] = useState("Brian");
+
+            const coaches = {
+                male: { Brian: "brian.png", Juan: "juan.png", Abdul: "abdul.png", Brendan: "brendan.png", Jerry: "jerry.png", Nick: "nick.png" },
+                female: { Niki: "niki.png", Sidney: "sidney.png", Mady: "mady.png", Chantay: "chantay.png", Becky: "becky.png" }
+            };
+
+            return (
+                <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg w-full max-w-md">
+                    <h1 className="text-2xl font-bold text-center mb-4">Choose Your AI Fitness Coach</h1>
+                    <h2 className="text-lg font-bold mb-3 text-center">Male Coaches</h2>
+                    <div className="grid grid-cols-3 gap-2 mb-3 w-full">
+                        {Object.keys(coaches.male).map((name) => (
+                            <button key={name} onClick={() => setSelected(name)} className={`px-3 py-2 rounded text-sm w-full ${selected === name ? "bg-blue-500 text-white" : "bg-gray-200"}`}>{name}</button>
+                        ))}
+                    </div>
+
+                    <h2 className="text-lg font-bold mb-3 text-center">Female Coaches</h2>
+                    <div className="grid grid-cols-3 gap-2 mb-3 w-full">
+                        {Object.keys(coaches.female).map((name) => (
+                            <button key={name} onClick={() => setSelected(name)} className={`px-3 py-2 rounded text-sm w-full ${selected === name ? "bg-pink-500 text-white" : "bg-gray-200"}`}>{name}</button>
+                        ))}
+                    </div>
+
+                    <div className="w-48 h-48 flex justify-center items-center border p-2 rounded-lg shadow">
+                        <img src={coaches.male[selected] || coaches.female[selected]} alt={selected} className="w-full h-full object-cover rounded-lg" />
+                    </div>
+                    <button onClick={() => setSelectedCoach(selected)} className="mt-4 px-4 py-2 bg-green-500 text-white rounded">Confirm Coach</button>
+                </div>
+            );
+        }
+
+        function ChatPage({ coachName, username, coachImage }) {
+            const [messages, setMessages] = useState([]);
+            const [input, setInput] = useState("");
+            const API_KEY = localStorage.getItem("apiKey") || "";
+
+            const sendMessage = async () => {
+                if (!input.trim()) return;
+                const userMessage = { sender: "You", text: input };
+                setMessages([...messages, userMessage]);
+                setInput("");
+
+                try {
+                    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${API_KEY}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            model: "gpt-4",
+                            messages: [{ role: "user", content: input }]
+                        })
+                    });
+
+                    const data = await response.json();
+                    const botMessage = { sender: coachName, text: data.choices[0].message.content };
+                    setMessages([...messages, userMessage, botMessage]);
+
+                } catch (error) {
+                    console.error("Error fetching AI response:", error);
+                }
+            };
+
+            return (
+                <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg w-full max-w-md">
+                    <h2 className="text-lg font-bold mb-3 text-center">{coachName} - AI Fitness Buddy</h2>
+                    <div className="w-full border rounded-lg p-4 mb-3 h-48 overflow-y-scroll">
+                        {messages.map((msg, index) => (
+                            <p key={index}><strong>{msg.sender}:</strong> {msg.text}</p>
+                        ))}
+                    </div>
+                    <input type="text" placeholder="Type a message..." className="w-full border p-2 rounded mb-2" value={input} onChange={(e) => setInput(e.target.value)} />
+                    <button onClick={sendMessage} className="px-4 py-2 bg-blue-500 text-white rounded">Send</button>
+                </div>
+            );
         }
         
         ReactDOM.render(<App />, document.getElementById("root"));
