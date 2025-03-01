@@ -104,7 +104,8 @@ return <VirtualCoachSelection setSelectedCoach={setSelectedCoach} />;
 
             const [messages, setMessages] = useState([]);
             const [input, setInput] = useState("");
-            const API_KEY = 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;
+            const API_KEY = localStorage.getItem("apiKey") || "";
+
 
             const sendMessage = async () => {
         if (!input.trim()) return;
