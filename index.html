@@ -95,7 +95,8 @@
             );
         }
 
-        function ChatPage({ coachName, username, coachImage }) {
+       function ChatPage({ coachName = "Coach", username = "User", coachImage = "default.png" }) {
+
             const [input, setInput] = useState("");
             const API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
 
