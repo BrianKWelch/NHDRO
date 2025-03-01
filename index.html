@@ -14,12 +14,49 @@
         <div id="root"></div>
     </div>
     <script type="text/babel">
-        const { useState } = React;
+        const { useState, useEffect } = React;
         
-        function VirtualCoachSelection() {
+        function App() {
+            const [username, setUsername] = useState("");
+            const [nameConfirmed, setNameConfirmed] = useState(false);
+
+            useEffect(() => {
+                const storedName = localStorage.getItem("username");
+                if (storedName) {
+                    setUsername(storedName);
+                    setNameConfirmed(true);
+                }
+            }, []);
+
+            const handleNameSubmit = () => {
+                if (username.trim() !== "") {
+                    localStorage.setItem("username", username);
+                    setNameConfirmed(true);
+                }
+            };
+
+            if (!nameConfirmed) {
+                return (
+                    <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg w-full max-w-md">
+                        <h2 className="text-lg font-bold mb-3 text-center">Welcome to AI Weight Loss Buddy</h2>
+                        <input 
+                            type="text" 
+                            placeholder="Enter your name" 
+                            className="w-full border p-2 rounded mb-3" 
+                            value={username} 
+                            onChange={(e) => setUsername(e.target.value)} 
+                        />
+                        <button onClick={handleNameSubmit} className="px-4 py-2 bg-green-500 text-white rounded">Continue</button>
+                    </div>
+                );
+            }
+
+            return <VirtualCoachSelection username={username} />;
+        }
+        
+        function VirtualCoachSelection({ username }) {
             const [selectedCoach, setSelectedCoach] = useState("Brian");
             const [confirmed, setConfirmed] = useState(false);
-            const [username, setUsername] = useState("User");
 
             const coaches = {
                 male: {
@@ -85,8 +122,7 @@
             );
         }
         
-        ReactDOM.render(<VirtualCoachSelection />, document.getElementById("root"));
+        ReactDOM.render(<App />, document.getElementById("root"));
     </script>
 </body>
 </html>
-
