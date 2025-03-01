@@ -64,7 +64,7 @@
             
             const coaches = {
                 male: { Brian: "brian.png", Juan: "juan.png", Abdul: "abdul.png", Brendan: "brendan.png", Jerry: "jerry.png", Nick: "nick.png" },
-                female: { Niki: "niki.png",  Sidney: "sidney.png", Mady: "mady.png",Chantay: "chantay.png",  Becky: "becky.png" }
+                female: { Chantay: "chantay.png", Sidney: "sidney.png", Mady: "mady.png", Niki: "niki.png", Becky: "becky.png" }
             };
 
             return (
@@ -93,6 +93,20 @@
         }
 
         function ChatPage({ coachName, username, coachImage }) {
+            const speak = (text) => {
+                const utterance = new SpeechSynthesisUtterance(text);
+                speechSynthesis.speak(utterance);
+            };
+
+            const startListening = () => {
+                const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                recognition.lang = 'en-US';
+                recognition.start();
+                recognition.onresult = (event) => {
+                    alert("You said: " + event.results[0][0].transcript);
+                };
+            };
+
             return (
                 <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-lg w-full max-w-md">
                     <div className="w-32 h-32 flex justify-center items-center border p-2 rounded-lg shadow mb-3">
@@ -101,9 +115,9 @@
                     <h2 className="text-lg font-bold mb-3 text-center">{coachName} - AI Fitness Buddy</h2>
                     <div className="w-full border rounded-lg p-4 mb-3">
                         <p className="text-gray-700 font-semibold">{`Good Morning ${username}, how's your fitness today?`}</p>
+                        <button onClick={() => speak(`Good Morning ${username}, how's your fitness today?`)} className="mt-2 px-4 py-2 bg-green-500 text-white rounded">🔊 Listen</button>
                     </div>
-                    <input type="text" placeholder="Type a message..." className="w-full border p-2 rounded mb-2" />
-                    <button className="px-4 py-2 bg-blue-500 text-white rounded">Send</button>
+                    <button onClick={startListening} className="px-4 py-2 bg-blue-500 text-white rounded">🎙️ Speak</button>
                 </div>
             );
         }
