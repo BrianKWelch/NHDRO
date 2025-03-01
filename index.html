@@ -53,7 +53,7 @@
             }
 
             if (selectedCoach) {
-                return <ChatPage coachName={selectedCoach} username={username} coachImage={`./images/${selectedCoach.toLowerCase()}.png`} />;
+                return <ChatPage coachName={selectedCoach} username={username} coachImage={`${selectedCoach.toLowerCase()}.png`} />;
             }
 
             return <VirtualCoachSelection setSelectedCoach={setSelectedCoach} />;
@@ -85,7 +85,7 @@
                     </div>
                     
                     <div className="w-48 h-48 flex justify-center items-center border p-2 rounded-lg shadow">
-                        <img src={`./images/${coaches.male[selected] || coaches.female[selected]}`} alt={selected} className="w-full h-full object-cover rounded-lg" />
+                        <img src={coaches.male[selected] || coaches.female[selected]} alt={selected} className="w-full h-full object-cover rounded-lg" />
                     </div>
                     <button onClick={() => setSelectedCoach(selected)} className="mt-4 px-4 py-2 bg-green-500 text-white rounded">Confirm Coach</button>
                 </div>
