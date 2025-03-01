@@ -56,9 +56,7 @@
     return <ChatPage coachName={selectedCoach} username={username} coachImage={selectedCoach ? `${selectedCoach.toLowerCase()}.png` : "default.png"} />;
 }
 
-            }
-
-            return <VirtualCoachSelection setSelectedCoach={setSelectedCoach} />;
+                      return <VirtualCoachSelection setSelectedCoach={setSelectedCoach} />;
         }
         
        function VirtualCoachSelection({ setSelectedCoach }) {
